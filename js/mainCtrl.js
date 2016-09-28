@@ -1,4 +1,29 @@
-angular.module('chatroom').controller('mainCtrl', function($scope, messageService){
+angular.module('chatroom')
+.controller('mainCtrl', function($scope, messageService){
+  $scope.getMessages = function(){
+  messageService.getMessages().then(function (response){
+    $scope.messages = response.data;
+  })
+}
+  $scope.postMessage = function (message){
+    messageService.postMessage(message);
+  }
+  setInterval(function(){
+   $scope.getMessages();
+  }, 1500)
+// $scope.getCookie = function(){
+// messageService.getCookie().then(function (response){
+//   $scope.cookies = response.data.cookies;
+// })
+// }
+// $scope.postCookies = function (message){
+//   messageService.postCookie(message);
+// }
+// setInterval(function(){
+//  $scope.getCookie();
+// }, 1500)
+})
+
   //In your controller you'll have a getMessages function and a postMessage function,
   //but should be placed on $scope.
 
@@ -17,5 +42,3 @@ angular.module('chatroom').controller('mainCtrl', function($scope, messageServic
 
   //uncomment this code when your getMessages function is finished
   //This goes and gets new data every second, which mimicking a chat room experience.
-
-})
